@@ -33,7 +33,8 @@ ZETTA WORD is a hybrid financial technology project combining Web3 innovation wi
 | **Network** | Binance Smart Chain (BSC) |
 | **Standard** | BEP-20 |
 | **Contract** | `0x8AaCC38933007eC530c552007E210B4667749DF1` |
-| **Total Supply** | 1,000,000,000 |
+| **Total Supply** | 1,000,000,000 (initial) |
+| **Final Supply** | 500,000,000 (after pre-fair-launch burn) |
 | **Decimals** | 18 |
 
 ## Documentation
@@ -62,7 +63,8 @@ All 14 informative findings have been reviewed and documented with technical res
 
 ## Links
 
-- **Website:** [zettaword.com](https://zettaword.com)
+- **Website:** [zettaword.com](https://zettaword.com) · [zettaword.global](https://zettaword.global)
+- **First live product:** [Z-SWAP — swap-z.app](https://swap-z.app)
 - **Audit:** [Cyberscope](https://www.cyberscope.io/audits/3-z)
 - **Contract:** [BSCScan](https://bscscan.com/token/0x8aacc38933007ec530c552007e210b4667749df1)
 

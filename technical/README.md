@@ -1,37 +1,26 @@
 # ZETTA Technical Documentation
 
+> **Version 2.0 — July 2026.** Updated to reflect the current state of the
+> ecosystem. The full technical document is published on the institutional
+> site (technical page + print-ready PDF).
+
 ## Architecture Overview
 
-ZETTA WORD is built on a hybrid architecture combining blockchain technology with traditional financial infrastructure.
+The ZETTA WORD ecosystem is built on a modular multi-layer architecture,
+designed for scalability, security and interoperability between traditional
+and decentralized financial services.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    ZETTA ECOSYSTEM                          │
-├─────────────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
-│  │   Z Token   │  │   Z-BANCK   │  │    ZETTA Apps       │ │
-│  │   (BSC)     │  │   (Fiat)    │  │    (23 Products)    │ │
-│  └──────┬──────┘  └──────┬──────┘  └──────────┬──────────┘ │
-│         │                │                     │            │
-│         └────────────────┼─────────────────────┘            │
-│                          │                                  │
-│              ┌───────────▼───────────┐                      │
-│              │    ZETTA Core API     │                      │
-│              │    (Hybrid Layer)     │                      │
-│              └───────────┬───────────┘                      │
-│                          │                                  │
-│         ┌────────────────┼────────────────┐                 │
-│         │                │                │                 │
-│  ┌──────▼──────┐  ┌──────▼──────┐  ┌─────▼─────┐           │
-│  │  BSC Chain  │  │  Banking    │  │  ZETTA    │           │
-│  │  (Web3)     │  │  Partners   │  │  Chain    │           │
-│  └─────────────┘  └─────────────┘  └───────────┘           │
-└─────────────────────────────────────────────────────────────┘
-```
+| Layer | Contents |
+|-------|----------|
+| 📱 **Application Layer** | Wallet, Pay, Swap, Earn, Launchpad, Terminal |
+| 🤖 **Services Layer** | ZION AI, KYC/KYB, Governance, Analytics |
+| 🏗️ **Infrastructure Layer** | Z-FINANCE, Bridge, Cloud, Verify |
+| ⛓️ **Core Layer** | Blockchain ZETTA, Smart Contracts, Z Token |
+
+**Architectural principles:** modularity, horizontal scalability, network
+neutrality, security by design, interoperability via REST APIs and SDKs.
 
 ## Smart Contract Specifications
-
-### Token Contract
 
 | Property | Value |
 |----------|-------|
@@ -45,7 +34,7 @@ ZETTA WORD is built on a hybrid architecture combining blockchain technology wit
 ### Inherited Contracts (OpenZeppelin)
 
 ```solidity
-contract zetta_word is 
+contract zetta_word is
     ERC20,           // Standard token functions
     ERC20Burnable,   // Burn capability
     Ownable2Step,    // Secure ownership transfer
@@ -53,229 +42,59 @@ contract zetta_word is
 { }
 ```
 
-### Contract Features
+Key on-chain properties: configurable fee system with a **hardcoded 25%
+maximum**, auto-liquidity via PancakeSwap V2 router, two-step ownership
+transfer, no mint function. Full specification and verified source code in
+[contract](../contract/).
 
-#### 1. Fee System
-
-```solidity
-// Fee structure (basis points, 100 = 1%)
-uint16[3] public totalFees;      // [buy, sell, transfer]
-uint16[3] public taxbuyFees;     // Tax wallet fees
-uint16[3] public liquidityFees;  // Auto-liquidity fees
-
-// Maximum fee limit (hardcoded)
-uint16 constant MAX_FEE = 2500;  // 25% maximum
-```
-
-#### 2. Auto-Liquidity
-
-```solidity
-function _swapAndLiquify(uint256 tokens) private {
-    uint256 half = tokens / 2;
-    uint256 otherHalf = tokens - half;
-    
-    // Swap half for BNB
-    _swapTokensForCoin(half);
-    
-    // Add liquidity with remaining tokens and BNB
-    _addLiquidity(otherHalf, address(this).balance);
-}
-```
-
-#### 3. AMM Integration
-
-```solidity
-// PancakeSwap V2 Router
-IUniswapV2Router02 public routerV2;
-address public pairV2;
-
-// Router address (BSC Mainnet)
-address constant PANCAKE_ROUTER = 0x10ED43C718714eb63d5aA57B78B54704E256024E;
-```
-
-### Security Features
-
-#### Anti-Bot Protection
-
-```solidity
-// Prevents contract calls during sensitive operations
-assembly { 
-    if iszero(extcodesize(caller())) { 
-        revert(0, 0) 
-    } 
-}
-```
-
-#### Two-Step Ownership
-
-```solidity
-// OpenZeppelin Ownable2Step
-// Requires new owner to accept ownership
-function transferOwnership(address newOwner) public onlyOwner
-function acceptOwnership() public
-```
-
-#### Fee Limits
-
-```solidity
-// Cannot exceed 25% total fees
-if (totalFees[0] > 2500 || totalFees[1] > 2500 || totalFees[2] > 2500)
-    revert CannotExceedMaxTotalFee();
-```
-
-## Module Architecture
-
-### Core Modules
+## Ecosystem Modules
 
 | Module | Status | Description |
 |--------|--------|-------------|
-| Z Token | Live | BEP-20 token on BSC |
-| Z-BANCK | Development | Hybrid banking platform |
-| ZION AI | Beta | AI assistant with GPT-4 |
-| ZETTA Chain | Planned | Native L1 blockchain |
-| Obelisk Wallet | Development | Multi-chain wallet |
+| **Z Token** | Live | BEP-20 token on BSC, audited and KYC-verified |
+| **ZETTA Swap (Z-SWAP)** | **Live** | Multi-chain DEX aggregator with AI trading advisory — [swap-z.app](https://swap-z.app) |
+| **ZION AI** | Live (within Z-SWAP) | Proprietary multi-model AI system for market analysis, risk scoring and operational automation |
+| **Obelisk-Z Wallet** | Development | Multi-chain non-custodial wallet |
+| **Z-PAD (Launchpad)** | Development | AI-vetted decentralized launchpad |
+| **ZETTA Pay (Z-PAY)** | Development | Payment orchestration layer (via authorized partners) |
+| **Z-FINANCE** | Development | Hybrid financial infrastructure (via authorized/regulated partners) |
+| **ZETTA Chain** | Planned | Native L1 blockchain (long-term) |
 
-### Integration Layer
+## Security & Compliance
 
-```
-┌─────────────────────────────────────────────┐
-│              ZETTA Core API                 │
-├─────────────────────────────────────────────┤
-│  Authentication  │  Transactions  │  Data  │
-├──────────────────┼───────────────┼─────────┤
-│  OAuth 2.0       │  Web3.js      │  REST   │
-│  JWT Tokens      │  Ethers.js    │  GraphQL│
-│  2FA/MFA         │  BSC RPC      │  WebSocket│
-└──────────────────┴───────────────┴─────────┘
-```
-
-## API Specifications
-
-### Authentication
-
-```http
-POST /api/v1/auth/login
-Content-Type: application/json
-
-{
-  "email": "user@example.com",
-  "password": "secure_password"
-}
-```
-
-### Token Price
-
-```http
-GET /api/v1/token/price
-
-Response:
-{
-  "symbol": "Z",
-  "price_usd": "0.00123",
-  "price_bnb": "0.0000045",
-  "change_24h": "+5.23%",
-  "volume_24h": "125000",
-  "market_cap": "1230000"
-}
-```
-
-### Wallet Balance
-
-```http
-GET /api/v1/wallet/{address}/balance
-
-Response:
-{
-  "address": "0x...",
-  "balance": "1000000",
-  "balance_formatted": "1,000,000 Z"
-}
-```
-
-## Blockchain Integration
-
-### Supported Networks
-
-| Network | Chain ID | Status |
-|---------|----------|--------|
-| BSC Mainnet | 56 | Active |
-| BSC Testnet | 97 | Testing |
-| Ethereum | 1 | Planned |
-| Polygon | 137 | Planned |
-| ZETTA Chain | TBD | Development |
-
-### Web3 Integration
-
-```javascript
-// Connect to BSC
-const provider = new ethers.providers.JsonRpcProvider(
-  'https://bsc-dataseed.binance.org/'
-);
-
-// Token contract
-const tokenContract = new ethers.Contract(
-  '0x8AaCC38933007eC530c552007E210B4667749DF1',
-  TokenABI,
-  provider
-);
-
-// Get balance
-const balance = await tokenContract.balanceOf(address);
-```
-
-## Security Architecture
-
-### Smart Contract Security
-
-| Feature | Implementation |
-|---------|----------------|
-| Audit | Cyberscope (Nov 2024) |
-| Ownership | Ownable2Step |
-| Reentrancy | CEI Pattern |
-| Overflow | Solidity 0.8+ |
-| Access Control | onlyOwner modifier |
-
-### Infrastructure Security
-
-- **SSL/TLS:** All connections encrypted
-- **DDoS Protection:** Cloudflare Enterprise
-- **Key Management:** Hardware Security Modules
-- **Monitoring:** 24/7 automated monitoring
+- **Smart contract:** Cyberscope audit (Nov 2024) — 0 critical, 0 medium;
+  Ownable2Step; Solidity 0.8+ overflow protection; CEI pattern.
+- **Team:** KYC verified (Cyberscope, Dec 2024).
+- **Applications:** security headers (CSP/HSTS), server-side secrets only,
+  rate limiting, audit trails. Financial-grade paths fail closed.
+- **Compliance posture:** progressive regulatory alignment with specialized
+  partners; KYC/KYB modules planned at protocol level for ZETTA Chain.
 
 ## Development Roadmap
 
-### Phase 1: Foundation (Q4 2024)
-- [x] Token deployment on BSC
-- [x] Cyberscope audit
-- [x] KYC verification
-- [x] Website launch
-- [ ] Presale on Pinksale
+Aligned with the institutional roadmap (see zettaword.com):
 
-### Phase 2: Expansion (Q1 2025)
-- [ ] Z-BANCK beta launch
-- [ ] ZION AI public release
-- [ ] Mobile app development
-- [ ] CEX listings
+| Phase | Milestone | Status |
+|-------|-----------|--------|
+| 1 | **Regulatory & corporate structure** — token deploy on BSC, Cyberscope audit, team KYC, institutional documentation | ✅ Completed |
+| 2 | **Proof-of-Burn** — 500M Z burned on-chain before fair launch (1B → 500M) | Upcoming |
+| 3 | **Fair Launch AMM** — no hardcap, no fixed price, on-chain trail | Upcoming |
+| 4 | **Ecosystem products** — Z-SWAP (already live), launchpad, wallet, payment layer | In progress |
+| 5 | **Global expansion** — Z-FINANCE MVP via authorized partners, institutional partnerships, ZETTA Chain | Long-term |
 
-### Phase 3: Ecosystem (Q2-Q3 2025)
-- [ ] Obelisk Wallet launch
-- [ ] Z-PAD (Launchpad)
-- [ ] ZETTA Pay integration
-- [ ] Partnership announcements
+## Supported Networks
 
-### Phase 4: Scale (Q4 2025+)
-- [ ] ZETTA Chain development
-- [ ] Cross-chain bridge
-- [ ] Enterprise solutions
-- [ ] Global expansion
+| Network | Chain ID | Status |
+|---------|----------|--------|
+| BSC Mainnet | 56 | Active (Z token) |
+| Multi-chain (via Z-SWAP) | — | Live — Solana + 10 EVM chains aggregated |
+| ZETTA Chain | TBD | Planned |
 
 ## Technical Support
 
-For technical inquiries:
-- **Documentation:** [zettaword.com/technical](https://zettaword.com/technical.html)
-- **GitHub:** [github.com/zettaword](https://github.com/zettaword)
-- **Telegram:** @ZettaWordOfficial
+- **Documentation:** [zettaword.com](https://zettaword.com)
+- **Contact:** contact@zettaword.global
 
 ---
 
-*Version 1.0 | December 2024*
+*Version 2.0 | July 2026*

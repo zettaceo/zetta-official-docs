@@ -4,6 +4,11 @@
 
 The ZETTA WORD Whitepaper outlines the vision, technology, and roadmap for the hybrid financial ecosystem powered by the Z token.
 
+> **Note (July 2026):** the economic parameters in the v1 PDF are
+> superseded by the official [Tokenomics](../tokenomics/) — fair launch
+> AMM model with a 500M pre-launch burn. The v1 PDF remains published for
+> historical traceability.
+
 ## Document
 
 - **File:** [ZETTA-Whitepaper-v1.pdf](./ZETTA-Whitepaper-v1.pdf)
@@ -37,7 +42,7 @@ The ZETTA WORD Whitepaper outlines the vision, technology, and roadmap for the h
 
 The ZETTA ecosystem includes 23 products:
 
-1. Z-BANCK
+1. Z-FINANCE
 2. ZION IA
 3. Blockchain ZETTA
 4. Obelisk-Z Wallet
