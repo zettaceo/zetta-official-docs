@@ -1,8 +1,9 @@
-# ZETTA Token Economics
+# ZETTA Token Economics — Official
 
-## Overview
-
-The Z token is the native utility token of the ZETTA WORD ecosystem, designed to power a hybrid financial infrastructure combining Web3 and traditional finance.
+> **Version 2.0 — July 2026.** This document supersedes the December 2024
+> tokenomics (presale / transaction-fee / gradual-burn model). The values
+> below are the **single official reference**, consistent with the
+> institutional site, the public whitepaper and the print documents.
 
 ## Token Information
 
@@ -14,135 +15,84 @@ The Z token is the native utility token of the ZETTA WORD ecosystem, designed to
 | **Standard** | BEP-20 |
 | **Decimals** | 18 |
 | **Contract** | `0x8AaCC38933007eC530c552007E210B4667749DF1` |
-| **Total Supply** | 1,000,000,000 Z |
-| **Final Supply** | 500,000,000 Z (after burn) |
+| **Initial Total Supply** | 1,000,000,000 Z |
+| **Pre-Fair-Launch Burn** | 500,000,000 Z |
+| **Final Supply** | 500,000,000 Z |
 
-## Token Distribution
+## Supply Structure
 
-| Allocation | Percentage | Amount | Purpose |
-|------------|------------|--------|---------|
-| **Presale** | 20% | 200,000,000 Z | Fair Launch on Pinksale |
-| **Liquidity** | 15% | 150,000,000 Z | PancakeSwap Liquidity Pool |
-| **Development** | 15% | 150,000,000 Z | Ecosystem Development |
-| **Marketing** | 10% | 100,000,000 Z | Global Marketing Campaigns |
-| **Team** | 10% | 100,000,000 Z | Team Allocation (Vested) |
-| **Ecosystem** | 10% | 100,000,000 Z | Partnerships & Integrations |
-| **Reserve** | 10% | 100,000,000 Z | Strategic Reserve |
-| **Burn** | 10% | 100,000,000 Z | Deflationary Burn |
+| Step | Amount | Event |
+|------|--------|-------|
+| 1 | 1,000,000,000 Z | Initial supply at deploy |
+| 2 | −500,000,000 Z | **Pre-fair-launch burn** — executed before the fair launch begins, verifiable on-chain |
+| 3 | 500,000,000 Z | Final official supply for the operational cycle |
 
-## Vesting Schedule
+No further burns are scheduled after the pre-fair-launch event.
 
-### Team Tokens (10%)
-- **Cliff:** 6 months
-- **Vesting:** 24 months linear
-- **Purpose:** Ensures long-term team commitment
+## Distribution (over the final 500M supply)
 
-### Development Tokens (15%)
-- **Cliff:** 3 months
-- **Vesting:** 18 months linear
-- **Purpose:** Controlled release for development funding
+| Category | Official % | Institutional guideline |
+|----------|-----------|------------------------|
+| Fair Launch + Liquidity (dynamic via AMM) | **45%** | Dynamic on-chain liquidity execution |
+| Staking & Rewards | **20%** | Functional network incentives |
+| Treasury | **13%** | Operational sustainability of the ecosystem |
+| Marketing & Acquisition | **10%** | Adoption and operational expansion |
+| Development | **10%** | Technical roadmap and continuous maintenance |
+| Founders (long vesting) | **4%** | Allocation under extended vesting schedule |
+| Advisors (vesting & restrictions) | **3%** | Allocation under institutional restrictions |
 
-### Ecosystem Tokens (10%)
-- **Cliff:** None
-- **Vesting:** Released based on partnership milestones
-- **Purpose:** Strategic partnerships and integrations
+## Fair Launch Mechanics
 
-## Transaction Fees
+- **Model:** Fair Launch AMM — **no hardcap, no fixed price**.
+- **Softcap:** USD 6,000,000 (technical reference parameter for the launch phase).
+- **Liquidity formation:** **51%** of proceeds → on-chain liquidity · **49%** → operational treasury.
 
-| Transaction Type | Fee | Distribution |
-|------------------|-----|--------------|
-| **Buy** | 5% | 3% Tax + 2% Liquidity |
-| **Sell** | 5% | 3% Tax + 2% Liquidity |
-| **Transfer** | 0% | No fees on wallet transfers |
+## Fair Launch Participation Registry & Benefits
 
-### Fee Breakdown
+Participation in the fair launch is registered technically **on-chain** for
+institutional transparency, regulatory predictability and historical
+traceability.
 
-- **Tax Wallet (3%):** Funds marketing, development, and operations
-- **Auto-Liquidity (2%):** Automatically adds to PancakeSwap liquidity pool
+1. **Fair Launch Participant Tier** — functional recognition of the
+   participating wallet, badge and access to an exclusive ecosystem area.
+2. **Executive Advisory Circle** — non-deliberative advisory structure with
+   executive context access; no financial governance, no treasury powers.
+3. **Priority Access to Future Modules/Products** — operational priority in
+   future modules and activation queues.
 
-### Fee Limits
+> The participation registry is technical and transparency-oriented. It
+> **does not create financial rights**, does not promise economic performance
+> and does not change the utility nature of the Z token.
 
-- Maximum total fee: **25%** (hardcoded in contract)
-- Current total fee: **5%** (extremely competitive)
+## Token Utility (functional)
 
-## Deflationary Mechanism
+- Activation of modules and service flows across the ecosystem.
+- Technical integration with the ecosystem's staking/rewards mechanisms.
+- Support for on-chain participation tracks and functional recognition.
 
-### Token Burn Strategy
+> The Z token does not represent equity, does not constitute a security and
+> does not imply any promise of financial performance.
 
-1. **Initial Burn:** 10% of supply burned at launch
-2. **Liquidity LP Burn:** LP tokens sent to dead address
-3. **Buyback & Burn:** Periodic burns from ecosystem revenue
-4. **Transaction Burns:** Portion of fees may be burned
+## Contract Security
 
-### Supply Reduction Timeline
+- **Audited:** Cyberscope (November 2024) — 0 critical, 0 medium findings.
+- **KYC Verified:** team identity verified (December 2024).
+- **No mint function:** supply cannot be increased.
+- **Ownership:** OpenZeppelin `Ownable2Step`.
+- **Fee limit:** maximum 25% hardcoded in the contract (see [contract](../contract/) for the fee system specification).
 
-| Phase | Supply |
-|-------|--------|
-| Launch | 1,000,000,000 Z |
-| Post-Initial Burn | 900,000,000 Z |
-| Target (Year 2) | 500,000,000 Z |
+## Regulatory Posture
 
-## Liquidity
+ZETTA acts as a modular digital infrastructure provider. It is **not a bank
+and not a financial institution**; financial and digital-asset services are
+operated through authorized/regulated partners, per applicable jurisdiction.
 
-### Initial Liquidity
-
-- **Amount:** 15% of supply + presale funds
-- **Lock Period:** 100 years
-- **Platform:** PancakeSwap V2
-- **Pair:** Z/BNB
-
-### Liquidity Security
-
-- LP tokens locked for 100 years
-- Prevents rug pull possibility
-- Automatic liquidity generation from fees
-
-## Token Utility
-
-The Z token provides utility across the entire ZETTA ecosystem:
-
-### 1. Transaction Fees
-Pay reduced fees when using Z token across ecosystem
-
-### 2. Staking Rewards
-Stake Z tokens to earn passive income
-
-### 3. Governance
-Vote on ecosystem proposals and development priorities
-
-### 4. Access
-Unlock premium features in ecosystem products
-
-### 5. Payments
-Use Z as payment method in Z-BANCK and ZETTA Pay
-
-### 6. Launchpad
-Participate in Z-PAD token launches
-
-## Investment Calculator
-
-### Example Projections
-
-| Investment | At $0.001 | At $0.01 | At $0.10 |
-|------------|-----------|----------|----------|
-| $100 | 100,000 Z | $1,000 | $10,000 |
-| $500 | 500,000 Z | $5,000 | $50,000 |
-| $1,000 | 1,000,000 Z | $10,000 | $100,000 |
-
-*Projections are for illustration only. Not financial advice.*
-
-## Security
-
-- **Audited:** Cyberscope (November 2024)
-- **KYC Verified:** Team identity verified
-- **No Mint Function:** Supply cannot be increased
-- **Ownership:** OpenZeppelin Ownable2Step
-
-## Contract Verification
+## Verification
 
 - **BSCScan:** [View Contract](https://bscscan.com/token/0x8aacc38933007ec530c552007e210b4667749df1)
-- **Source Code:** Verified and open source
+- **Audit:** [Cyberscope](https://www.cyberscope.io/audits/3-z)
 
 ---
 
-*Disclaimer: This document is for informational purposes only and does not constitute financial advice. Always conduct your own research before investing.*
+*This document is informational and technical. It does not constitute an
+offer of securities, financial advice or a promise of financial performance.*
